@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Rfmanalysis</base>
+  <class>RfmAnalysis</class>
+  <name>civicrm_rfm_analysis_config</name>
+  <comment>FIXME</comment>
+  <add>4.4</add>
+  <log>true</log>
+
+  <field>
+    <name>id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Unique RfmAnalysis ID</comment>
+    <add>4.4</add>
+  </field>
+  <primaryKey>
+    <name>id</name>
+    <autoincrement>true</autoincrement>
+  </primaryKey>
+
+  <field>
+    <name>name</name>
+    <type>char</type>
+    <length>50</length>
+    <comment>Config name</comment>
+    <add>4.4</add>
+  </field>
+
+  <field>
+    <name>value</name>
+    <type>char</type>
+    <length>50</length>
+    <comment>Config value</comment>
+    <add>4.4</add>
+  </field>
+
+  <field>
+    <name>created_at</name>
+    <type>datetime</type>
+    <comment>Time created</comment>
+    <add>4.4</add>
+  </field>
+
+  <field>
+    <name>updated_at</name>
+    <type>datetime</type>
+    <comment>Time edited</comment>
+    <add>4.4</add>
+  </field>
+</table>

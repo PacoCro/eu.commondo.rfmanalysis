@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/rfm-analysis/calculate</path>
+    <page_callback>CRM_Rfmanalysis_Page_RFMAnalysis</page_callback>
+    <title>RFMAnalysis</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+  <item>
+    <path>civicrm/rfm-analysis/contact-tab</path>
+    <page_callback>CRM_Rfmanalysis_Page_ContactRfmTab</page_callback>
+    <title>ContactRfmTab</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+
+  <item>
+    <path>civicrm/rfm-analysis/test</path>
+    <page_callback>CRM_Rfmanalysis_Page_Test</page_callback>
+    <title>Test</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+</menu>

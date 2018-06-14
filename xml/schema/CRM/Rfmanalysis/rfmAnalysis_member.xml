@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+    <base>CRM/Rfmanalysis</base>
+    <class>RfmAnalysis</class>
+    <name>civicrm_rfm_analysis_member_data</name>
+    <comment>FIXME</comment>
+    <add>4.4</add>
+    <log>true</log>
+
+    <field>
+        <name>id</name>
+        <type>int unsigned</type>
+        <required>true</required>
+        <comment>Unique RfmAnalysis member data ID</comment>
+        <add>4.4</add>
+    </field>
+    <primaryKey>
+        <name>id</name>
+        <autoincrement>true</autoincrement>
+    </primaryKey>
+
+    <field>
+        <name>member_id</name>
+        <type>int</type>
+        <length>11</length>
+        <comment>comment</comment>
+        <add>4.4</add>
+    </field>
+
+    <field>
+        <name>recent_donation_date</name>
+        <type>date</type>
+        <comment>date</comment>
+        <add>4.4</add>
+    </field>
+
+    <field>
+        <name>oldest_donation_date</name>
+        <type>date</type>
+        <comment>date</comment>
+        <add>4.4</add>
+    </field>
+
+    <field>
+        <name>donation_number</name>
+        <type>int</type>
+        <length>11</length>
+        <comment>Time created</comment>
+        <add>4.4</add>
+    </field>
+
+    <field>
+        <name>donation_sum</name>
+        <type>int</type>
+        <length>11</length>
+        <comment>Time created</comment>
+        <add>4.4</add>
+    </field>
+
+    <field>
+        <name>created_at</name>
+        <type>datetime</type>
+        <comment>Time created</comment>
+        <add>4.4</add>
+    </field>
+
+    <field>
+        <name>updated_at</name>
+        <type>datetime</type>
+        <comment>Time edited</comment>
+        <add>4.4</add>
+    </field>
+</table>
