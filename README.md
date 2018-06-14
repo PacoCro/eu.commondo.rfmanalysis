@@ -1,15 +1,15 @@
-# eu.commondo.rfmanalysis
+# Contact RFM Analysis CiviCRM extension
 
-![Screenshot](/images/screenshot.png)
 
-(*FIXME: In one or two paragraphs, describe what the extension does and why one would download it. *)
+
+This extension will perform RFM analysis on your contacts. RFM analysis is recalculated once a day. RFM analysis results for each customer are showed on Summary page of each customer in RFM analysis tab.
 
 The extension is licensed under [AGPL-3.0](LICENSE.txt).
 
 ## Requirements
 
 * PHP v5.4+
-* CiviCRM (*FIXME: Version number*)
+* CiviCRM (4.7+)
 
 ## Installation (Web UI)
 
@@ -22,7 +22,7 @@ install it with the command-line tool [cv](https://github.com/civicrm/cv).
 
 ```bash
 cd <extension-dir>
-cv dl eu.commondo.rfmanalysis@https://github.com/FIXME/eu.commondo.rfmanalysis/archive/master.zip
+cv dl eu.commondo.rfmanalysis@https://github.com/CommCivi/eu.commondo.rfmanalysis/archive/master.zip
 ```
 
 ## Installation (CLI, Git)
@@ -31,14 +31,14 @@ Sysadmins and developers may clone the [Git](https://en.wikipedia.org/wiki/Git) 
 install it with the command-line tool [cv](https://github.com/civicrm/cv).
 
 ```bash
-git clone https://github.com/FIXME/eu.commondo.rfmanalysis.git
+git clone https://github.com/CommCivi/eu.commondo.rfmanalysis.git
 cv en rfmanalysis
 ```
 
 ## Usage
 
-(* FIXME: Where would a new user navigate to get started? What changes would they see? *)
+NIL
 
 ## Known Issues
 
-(* FIXME *)
+NIL

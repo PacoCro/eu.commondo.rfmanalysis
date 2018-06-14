@@ -5,13 +5,13 @@
   <description>This extension will perform RFM analysis on your contacts. RFM analysis is recalculated once a day. RFM analysis results for each customer are showed on Summary page of each customer in RFM analysis tab.</description>
   <license>AGPL-3.0</license>
   <maintainer>
-    <author>Patrik K.</author>
+    <author>CommCivi</author>
     <email>patrik.kranjcec@commondo.eu</email>
   </maintainer>
   <urls>
-    <url desc="Main Extension Page">http://example.com</url>
-    <url desc="Documentation">http://example.com</url>
-    <url desc="Support">http://example.com</url>
+    <url desc="Main Extension Page">https://github.com/CommCivi/eu.commondo.rfmanalysis</url>
+    <url desc="Documentation">https://github.com/CommCivi/eu.commondo.rfmanalysis</url>
+    <url desc="Support">https://github.com/CommCivi/eu.commondo.rfmanalysis</url>
     <url desc="Licensing">http://www.gnu.org/licenses/agpl-3.0.html</url>
   </urls>
   <releaseDate>2018-03-27</releaseDate>
@@ -20,7 +20,7 @@
   <compatibility>
     <ver>4.7</ver>
   </compatibility>
-  <comments>This is extension has to be tested and documented.</comments>
+  <comments></comments>
   <civix>
     <namespace>CRM/Rfmanalysis</namespace>
   </civix>
