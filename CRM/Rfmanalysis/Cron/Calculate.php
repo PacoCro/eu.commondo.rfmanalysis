@@ -11,6 +11,9 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
         'm' => array([0,0,0,0,0,0])
     );
     private $memberCount;
+    private $cf_coc;
+    private $cf_dolc;
+    private $cf_tlc;
 
 
     /*
@@ -22,6 +25,8 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
      */
     public function start()
     {
+        $this->findCustomFields();
+
         $this->memberCount = $this->getMemberCount();
 
         $this->calculateBuckets();
@@ -50,59 +55,61 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
     private function calculateRBucket()
     {
 
+        $dateOfLastContribution = $this->cf_dolc;
+
         $bucketLimit = round($this->memberCount/5);
 
         $result6 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_47",
-            'options' => array('limit' => 1, 'sort' => "custom_47 desc"),
-            'custom_47' => array('IS NOT NULL' => 1),
+            'return' => $dateOfLastContribution,
+            'options' => array('limit' => 1, 'sort' => "{$dateOfLastContribution} desc"),
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
         ));
 
         $result5 = $result = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_47",
-            'options' => array('limit' => 1, 'offset' => $bucketLimit, 'sort' => "custom_47 desc"),
-            'custom_47' => array('IS NOT NULL' => 1),
+            'return' => $dateOfLastContribution,
+            'options' => array('limit' => 1, 'offset' => $bucketLimit, 'sort' => "{$dateOfLastContribution} desc"),
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
         ));
 
         $result4 = $result = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_47",
-            'options' => array('limit' => 1, 'offset' => $bucketLimit*2, 'sort' => "custom_47 desc"),
-            'custom_47' => array('IS NOT NULL' => 1),
+            'return' => $dateOfLastContribution,
+            'options' => array('limit' => 1, 'offset' => $bucketLimit*2, 'sort' => "{$dateOfLastContribution} desc"),
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
         ));
 
         $result3 = $result = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_47",
-            'options' => array('limit' => 1, 'offset' => $bucketLimit*3, 'sort' => "custom_47 desc"),
-            'custom_47' => array('IS NOT NULL' => 1),
+            'return' => $dateOfLastContribution,
+            'options' => array('limit' => 1, 'offset' => $bucketLimit*3, 'sort' => "{$dateOfLastContribution} desc"),
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
         ));
 
         $result2 = $result = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_47",
-            'options' => array('limit' => 1, 'offset' => $bucketLimit*4, 'sort' => "custom_47 desc"),
-            'custom_47' => array('IS NOT NULL' => 1),
+            'return' => $dateOfLastContribution,
+            'options' => array('limit' => 1, 'offset' => $bucketLimit*4, 'sort' => "{$dateOfLastContribution} desc"),
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
         ));
 
         $result1 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_47",
-            'options' => array('limit' => 1, 'sort' => "custom_47 asc"),
-            'custom_47' => array('IS NOT NULL' => 1),
+            'return' => $dateOfLastContribution,
+            'options' => array('limit' => 1, 'sort' => "{$dateOfLastContribution} asc"),
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
         ));
 
 
-        $first = $result1['values'][0]['custom_47'];
+        $first = $result1['values'][0][$dateOfLastContribution];
 
-        $second = $result2['values'][0]['custom_47'];
-        $third = $result3['values'][0]['custom_47'];
-        $fourth = $result4['values'][0]['custom_47'];
-        $fifth = $result5['values'][0]['custom_47'];
+        $second = $result2['values'][0][$dateOfLastContribution];
+        $third = $result3['values'][0][$dateOfLastContribution];
+        $fourth = $result4['values'][0][$dateOfLastContribution];
+        $fifth = $result5['values'][0][$dateOfLastContribution];
 
-        $sixth = $result6['values'][0]['custom_47'];
+        $sixth = $result6['values'][0][$dateOfLastContribution];
 
         $this->buckets['r'] = array(
             $sixth,
@@ -121,58 +128,61 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
     private function calculateFBucket()
     {
 
+        $dateOfLastContribution = $this->cf_dolc;
+        $countOfContributions = $this->cf_coc;
+
         $bucketLimit = round($this->memberCount/5);
 
         $result1 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_50,custom_46",
-            'options' => array('sort' => "custom_50 asc", 'limit' => 1),
-            'custom_47' => array('IS NOT NULL' => 1),
+            'return' => $countOfContributions,
+            'options' => array('sort' => "{$countOfContributions} asc", 'limit' => 1),
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
         ));
 
         $result2 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_50",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_50 desc", 'limit' => 1, 'offset' => $bucketLimit),
+            'return' => $countOfContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => "{$countOfContributions} desc", 'limit' => 1, 'offset' => $bucketLimit*4),
         ));
 
         $result3 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_50",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_50 desc", 'limit' => 1, 'offset' => $bucketLimit*2),
+            'return' => $countOfContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => "{$countOfContributions} desc", 'limit' => 1, 'offset' => $bucketLimit*3),
         ));
 
         $result4 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_50",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_50 desc", 'limit' => 1, 'offset' => $bucketLimit*3),
+            'return' => $countOfContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => "{$countOfContributions} desc", 'limit' => 1, 'offset' => $bucketLimit*2),
         ));
 
         $result5 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_50",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_50 desc", 'limit' => 1, 'offset' => $bucketLimit*4),
+            'return' => $countOfContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => "{$countOfContributions} desc", 'limit' => 1, 'offset' => $bucketLimit),
         ));
 
         $result6 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_50,custom_46",
-            'options' => array('sort' => "custom_50 desc", 'limit' => 1),
-            'custom_47' => array('IS NOT NULL' => 1),
+            'return' => $countOfContributions,
+            'options' => array('sort' => "{$countOfContributions} desc", 'limit' => 1),
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
         ));
 
-        $min = $result1['values'][0]['custom_50'];
+        $min = $result1['values'][0][$countOfContributions];
 
-        $second = $result2['values'][0]['custom_50'];
-        $third = $result3['values'][0]['custom_50'];
-        $fourth = $result4['values'][0]['custom_50'];
-        $fifth = $result5['values'][0]['custom_50'];
+        $second = $result2['values'][0][$countOfContributions];
+        $third = $result3['values'][0][$countOfContributions];
+        $fourth = $result4['values'][0][$countOfContributions];
+        $fifth = $result5['values'][0][$countOfContributions];
 
-        $max = $result6['values'][0]['custom_50'];
+        $max = $result6['values'][0][$countOfContributions];
 
 
         $this->buckets['f'] = array(
@@ -192,56 +202,59 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
     private function calculateMBucket()
     {
 
+        $totalContributions = $this->cf_tlc;
+        $dateOfLastContribution = $this->cf_dolc;
+
         $bucketLimit = round($this->memberCount/5);
 
         $result1 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_39",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_39 asc", 'limit' => 1),
+            'return' => $totalContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => "{$totalContributions} asc", 'limit' => 1),
         ));
 
         $result2 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_39",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_39 desc", 'limit' => 1, 'offset' => $bucketLimit*4),
+            'return' => $totalContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => "{$totalContributions} desc", 'limit' => 1, 'offset' => $bucketLimit*4),
         ));
 
         $result3 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_39",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_39 desc", 'limit' => 1, 'offset' => $bucketLimit*3),
+            'return' => $totalContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => $totalContributions, 'limit' => 1, 'offset' => $bucketLimit*3),
         ));
 
         $result4 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_39",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_39 desc", 'limit' => 1, 'offset' => $bucketLimit*2),
+            'return' => $totalContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => "{$totalContributions} desc", 'limit' => 1, 'offset' => $bucketLimit*2),
         ));
 
         $result5 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_39",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_39 desc", 'limit' => 1, 'offset' => $bucketLimit),
+            'return' => $totalContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => "{$totalContributions} desc", 'limit' => 1, 'offset' => $bucketLimit),
         ));
 
         $result6 = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_39",
-            'custom_47' => array('IS NOT NULL' => 1),
-            'options' => array('sort' => "custom_39 desc", 'limit' => 1),
+            'return' => $totalContributions,
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
+            'options' => array('sort' => "{$totalContributions} desc", 'limit' => 1),
         ));
 
-        $min = $result1['values'][0]['custom_39'];
-        $second = $result2['values'][0]['custom_39'];
-        $third = $result3['values'][0]['custom_39'];
-        $fourth = $result4['values'][0]['custom_39'];
-        $fifth = $result5['values'][0]['custom_39'];
-        $max = $result6['values'][0]['custom_39'];
+        $min = $result1['values'][0][$totalContributions];
+        $second = $result2['values'][0][$totalContributions];
+        $third = $result3['values'][0][$totalContributions];
+        $fourth = $result4['values'][0][$totalContributions];
+        $fifth = $result5['values'][0][$totalContributions];
+        $max = $result6['values'][0][$totalContributions];
 
         $this->buckets['m'] = array(
             $max,
@@ -251,6 +264,8 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
             $second,
             $min
         );
+
+        //echo '<pre>'; var_dump($this->buckets); echo '</pre>'; die();
     }
 
 
@@ -260,6 +275,10 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
     private function recalculateMemberRFM()
     {
 
+        $totalContributions = $this->cf_tlc;
+        $dateOfLastContribution = $this->cf_dolc;
+        $countOfContributions = $this->cf_coc;
+
     $count = $this->memberCount;
     $offset = 0;
     $limit = 10;
@@ -268,8 +287,8 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
 
         $contacts = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
-            'return' => "custom_39,custom_47,custom_50",
-            'custom_47' => array('IS NOT NULL' => 1),
+            'return' => "{$totalContributions},{$dateOfLastContribution},{$countOfContributions}",
+            $dateOfLastContribution => array('IS NOT NULL' => 1),
             'options' => array('limit' => $limit, 'offset' => $offset, 'sort' => 'contact_id asc'),
         ));
 
@@ -316,7 +335,7 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
     {
         $result = civicrm_api3('Contact', 'getcount', array(
             'sequential' => 1,
-            'custom_47' => array('IS NOT NULL' => 1),
+            $this->cf_dolc => array('IS NOT NULL' => 1),
         ));
 
         return $result;
@@ -356,14 +375,16 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
     private function calculateR($contact)
     {
 
-        $contact['custom_47'] = strtotime($contact['custom_47']);
+        $dateOfLastContribution = $this->cf_dolc;
+
+        $contact[$dateOfLastContribution] = strtotime($contact[$dateOfLastContribution]);
 
         $value = 6;
         foreach($this->buckets['r'] as $boundary) {
 
             $boundary = strtotime($boundary);
 
-            if (($contact['custom_47'] > $boundary) or ($value === 1 and $contact['custom_47'] >= $boundary)) {
+            if (($contact[$dateOfLastContribution] > $boundary) or ($value === 1 and $contact[$dateOfLastContribution] >= $boundary)) {
                 break;
             }
 
@@ -380,10 +401,12 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
     private function calculateF($contact)
     {
 
+        $countOfContributions = $this->cf_coc;
+
         $value = 6;
         foreach($this->buckets['f'] as $boundary) {
 
-            if (($contact['custom_50'] > $boundary) or ($value === 1 and $contact['custom_50'] >= $boundary)) {
+            if (($contact[$countOfContributions] > $boundary) or ($value === 1 and $contact[$countOfContributions] >= $boundary)) {
                 break;
             }
 
@@ -399,10 +422,12 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
      */
     private function calculateM($contact)
     {
+        $totalContributions = $this->cf_tlc;
+
         $value = 6;
         foreach($this->buckets['m'] as $boundary) {
 
-            if (($contact['custom_39'] > $boundary) or ($value === 1 and $contact['custom_39'] >= $boundary)) {
+            if (($contact[$totalContributions] > $boundary) or ($value === 1 and $contact[$totalContributions] >= $boundary)) {
                 break;
             }
 
@@ -436,32 +461,63 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
 
         $fm = ($f + $m)/2;
 
-        if ($r <2 AND $fm <2) {
-            $group = 1;
-        } else if ((($fm > 1 AND $fm < 4) AND ($r > 1 AND $r < 3) OR (($fm < 1) AND ($r > 1 and $r <3)))) {
-            $group = 2;
-        } else if ((($r < 2 AND $r < 5) AND ($fm < 3)) OR (($r > 5) AND (($fm < 3) AND ($fm  > 1)))) {
-            $group = 3;
-        } else if (($fm < 5 AND $fm >3) AND ($r > 1 AND $r <3)) {
-            $group = 4;
-        } else if ((($fm > 3) AND ($r < 3)) AND (($fm < 5 AND $fm > 3) AND $r <2)) {
-            $group = 5;
-        } else if (($r > 2 AND $r < 4) AND ($fm > 2 and $fm < 4)) {
-            $group = 6;
-        } else if ($fm > 3 AND ($r > 2 AND $r < 4)) {
-            $group = 7;
-        } else if (($r > 3 AND $r < 5) AND $fm > 4) {
-            $group = 8;
-        } else if ($r > 3 AND ($fm > 2 AND $fm < 5)) {
-            $group = 9;
-        } else if ($r > 5 AND $fm > 5) {
-            $group = 10;
-        } else if ($r > 5 and $fm < 2) {
+        if ($r > 4 and $fm > 4) {
             $group = 11;
+        } else if ($r < 2 AND $fm > 4) {
+            $group = 10;
+        } else if (($r < 4 AND $r > 1) AND $fm > 3) {
+            $group = 9;
+        } else if ($fm > 3 and $fm < 5 AND $r < 2) {
+            $group = 8;
+        } else if ($fm > 2 and $fm < 4 AND $r < 3) {
+            $group = 7;
+        } else if (($fm > 2 AND $fm < 4) AND ($r > 2 AND $r < 4)) {
+            $group = 6;
+        } else if (($fm < 2 AND ($r < 3)) OR ($fm < 3 and $r < 2)) {
+            $group = 5;
+        } else if ($r > 1 and $r < 3 and $fm > 1 and $fm < 3) {
+            $group = 4;
+        } else if (($fm > 2 and $fm < 5 and $r > 3) or ($fm > 4 and $r < 5 and $r > 3)) {
+            $group = 3;
+        } else if (($fm < 3 and $r < 5 and $r > 2) or ($fm > 1 and $fm < 3 and $r > 4)) {
+            $group = 2;
+        } else if ($r > 4 AND $fm < 2) {
+            $group = 1;
         } else {
             $group = 0;
         }
 
         return $group;
+    }
+
+
+    private function findCustomFields() {
+
+        // Total number of contribution custom field id
+        $cf_coc = civicrm_api3('CustomField', 'get', array(
+            'sequential' => 1,
+            'return' => "id",
+            'name' => "Count_Of_Contributions",
+        ));
+
+        $this->cf_coc = "custom_" . $cf_coc['values'][0]['id'];
+
+        // Date of last contribution custom field id
+        $cf_dolc = civicrm_api3('CustomField', 'get', array(
+            'sequential' => 1,
+            'return' => "id",
+            'name' => "Date_Of_Last_Contribution",
+        ));
+
+        $this->cf_dolc = "custom_" . $cf_dolc['values'][0]['id'];
+
+        // Total lifetime contribution custom field id
+        $cf_tlc = civicrm_api3('CustomField', 'get', array(
+            'sequential' => 1,
+            'return' => "id",
+            'name' => "Total_Lifetime_Contributions",
+        ));
+
+        $this->cf_tlc = "custom_" . $cf_tlc['values'][0]['id'];
     }
 }
