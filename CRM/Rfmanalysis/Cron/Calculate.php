@@ -279,16 +279,18 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
         $dateOfLastContribution = $this->cf_dolc;
         $countOfContributions = $this->cf_coc;
 
-    $count = $this->memberCount;
+    
+    $count = civicrm_api3('Contact', 'getcount', array(
+        'sequential' => 1,
+    ));
     $offset = 0;
-    $limit = 10;
+    $limit = 100;
 
     while ($offset < $count) {
 
         $contacts = civicrm_api3('Contact', 'get', array(
             'sequential' => 1,
             'return' => "{$totalContributions},{$dateOfLastContribution},{$countOfContributions}",
-            $dateOfLastContribution => array('IS NOT NULL' => 1),
             'options' => array('limit' => $limit, 'offset' => $offset, 'sort' => 'contact_id asc'),
         ));
 
@@ -459,6 +461,7 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
             "11" => "Champions"
         );
 
+
         $fm = ($f + $m)/2;
 
         if ($r > 4 and $fm > 4) {
@@ -484,6 +487,10 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
         } else if ($r > 4 AND $fm < 2) {
             $group = 1;
         } else {
+            $group = 0;
+        }
+
+        if ($r == 0 and $f == 0 and $m == 0) {
             $group = 0;
         }
 
