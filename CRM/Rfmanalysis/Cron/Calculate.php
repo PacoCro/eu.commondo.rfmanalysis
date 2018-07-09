@@ -279,6 +279,7 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
         $dateOfLastContribution = $this->cf_dolc;
         $countOfContributions = $this->cf_coc;
 
+    
     $count = civicrm_api3('Contact', 'getcount', array(
         'sequential' => 1,
     ));
