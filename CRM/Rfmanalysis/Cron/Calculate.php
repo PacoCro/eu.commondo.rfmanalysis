@@ -284,7 +284,7 @@ class CRM_Rfmanalysis_Cron_Calculate extends CRM_Core_Page
         'sequential' => 1,
     ));
     $offset = 0;
-    $limit = 100;
+    $limit = 1000;
 
     while ($offset < $count) {
 
